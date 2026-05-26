@@ -49,6 +49,10 @@
   h1.headline{font-size:3.5rem;margin:22px 0 18px}
   .hero p.lead{font-size:1.28rem;color:var(--soft);max-width:36ch}
   .hero .cta{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap}
+  .platforms-hero{display:flex;align-items:center;gap:12px;margin-top:24px;flex-wrap:wrap}
+  .platforms-hero .ph-label{color:var(--soft);font-size:.9rem}
+  .platforms-hero .ph-badges{display:flex;gap:8px;flex-wrap:wrap}
+  .platforms-hero .ph-badges span{border:1px solid var(--line);background:var(--surface2);border-radius:99px;padding:6px 13px;font-size:.85rem;font-weight:600;color:var(--ink)}
   @media(max-width:880px){.hero-grid{grid-template-columns:1fr;gap:36px}h1.headline{font-size:2.5rem}}
 
   .device{justify-self:end;width:330px;max-width:100%;background:linear-gradient(180deg,#262422,#1c1b1a);
@@ -214,12 +218,16 @@
 <!-- HERO -->
 <header class="hero"><div class="wrap hero-grid">
   <div>
-    <span class="eyebrow" data-i18n="hero.eyebrow">ИИ-ассистент для бизнеса</span>
+    <span class="eyebrow" data-i18n="hero.eyebrow">Приложение-ассистент для бизнеса</span>
     <h1 class="headline" data-i18n="hero.h1">Рутина — машине.<br>Решения — людям.</h1>
-    <p class="lead" data-i18n="hero.lead">Maru связывает вашу учётную систему, банк, документы и данные с рабочих мест в один слой — и превращает рутину в команды на обычном языке, автоматические отчёты и прогнозы.</p>
+    <p class="lead" data-i18n="hero.lead">Всё взаимодействие — через приложение Maru на ваших устройствах: Mac, Windows, Android, iPhone. Оно связывает учётную систему, банк, документы и данные с мест в один слой и превращает рутину в команды, отчёты и прогнозы.</p>
     <div class="cta">
       <a class="btn primary" href="#contact" data-i18n="hero.cta1">Запросить демонстрацию →</a>
       <a class="btn ghost" href="#how" data-i18n="hero.cta2">Как это работает</a>
+    </div>
+    <div class="platforms-hero">
+      <span class="ph-label" data-i18n="hero.platlabel">Одно приложение на всех устройствах:</span>
+      <span class="ph-badges"><span>🍎 macOS</span><span>🪟 Windows</span><span>🤖 Android</span><span>📱 iPhone</span></span>
     </div>
   </div>
   <div class="device">
@@ -241,8 +249,24 @@
   <div class="stat"><div class="v"><b>1С</b></div><div class="l" data-i18n="trust.4">создаём документы, не только читаем</div></div>
 </div></div></div>
 
+<!-- APPS / PLATFORMS -->
+<section class="block" id="apps"><div class="wrap">
+  <div class="sec-head">
+    <span class="eyebrow" data-i18n="plf.eyebrow">Наше приложение</span>
+    <h2 data-i18n="plf.h2">Всё взаимодействие — через приложение Maru</h2>
+    <p data-i18n="plf.sub">Никаких разрозненных программ. Один Maru — на компьютере и в телефоне, с единым входом и общими данными. Текст, голос, фото и документы — в одном приложении на любом устройстве.</p>
+  </div>
+  <div class="caps">
+    <div class="cap"><div class="ic">🍎</div><h3>macOS</h3><p data-i18n="plf.macd">Десктоп-приложение для Mac.</p></div>
+    <div class="cap"><div class="ic">🪟</div><h3>Windows</h3><p data-i18n="plf.wind">Десктоп-приложение для Windows.</p></div>
+    <div class="cap"><div class="ic">🤖</div><h3>Android</h3><p data-i18n="plf.andd">Мобильное приложение для Android.</p></div>
+    <div class="cap"><div class="ic">📱</div><h3>iPhone · iPad</h3><p data-i18n="plf.iosd">Мобильное приложение для iOS.</p></div>
+  </div>
+  <div class="plat-note" data-i18n="plf.note">Один ассистент, одна история, одни данные — на каком бы устройстве вы ни открыли Maru. Начали на телефоне в цехе — продолжили на компьютере в офисе.</div>
+</div></section>
+
 <!-- PROBLEM -->
-<section class="block"><div class="wrap">
+<section class="block how"><div class="wrap">
   <div class="sec-head">
     <span class="eyebrow" data-i18n="prob.eyebrow">Знакомо?</span>
     <h2 data-i18n="prob.h2">Бизнес тонет в рутине</h2>
@@ -261,10 +285,10 @@
   <div class="sec-head">
     <span class="eyebrow" data-i18n="caps.eyebrow">Возможности сегодня</span>
     <h2 data-i18n="caps.h2">Один ассистент вместо десяти программ</h2>
-    <p data-i18n="caps.sub">Сотрудник пишет или надиктовывает задачу в мессенджере — Maru сам работает со всеми системами и возвращает результат.</p>
+    <p data-i18n="caps.sub">Сотрудник пишет или надиктовывает задачу в приложении Maru — оно само работает со всеми системами и возвращает результат.</p>
   </div>
   <div class="caps">
-    <div class="cap"><div class="ic">💬</div><h3 data-i18n="cap.1t">Мессенджер-интерфейс</h3><p data-i18n="cap.1d">Текст, голос, фото, документы. Осваивать нечего.</p></div>
+    <div class="cap"><div class="ic">💬</div><h3 data-i18n="cap.1t">Единое приложение</h3><p data-i18n="cap.1d">Mac, Windows, Android, iPhone — текст, голос, фото, документы.</p></div>
     <div class="cap"><div class="ic">👥</div><h3 data-i18n="cap.2t">Ассистенты с правами</h3><p data-i18n="cap.2d">Роли и доступы: кто-то смотрит, кто-то меняет.</p></div>
     <div class="cap"><div class="ic">🔗</div><h3 data-i18n="cap.3t">Интеграция с 1С</h3><p data-i18n="cap.3d">Чтение справочников и создание документов в учёте.</p></div>
     <div class="cap"><div class="ic">📄</div><h3 data-i18n="cap.4t">Документы из шаблонов</h3><p data-i18n="cap.4d">Договоры, счета, акты, накладные — за секунды, с печатью.</p></div>
@@ -303,7 +327,7 @@
     <p data-i18n="how.sub">Сотрудник общается с Maru как с человеком. Под капотом — связка с вашими системами и десятки фоновых процессов.</p>
   </div>
   <div class="flow">
-    <div class="step"><div class="n">1</div><div><h3 data-i18n="how.1t">Запрос на обычном языке</h3><p data-i18n="how.1d">Текст, голос, фото накладной или документ — прямо в мессенджере.</p></div></div>
+    <div class="step"><div class="n">1</div><div><h3 data-i18n="how.1t">Запрос на обычном языке</h3><p data-i18n="how.1d">Текст, голос, фото накладной или документ — прямо в приложении Maru (Mac, Windows, Android, iPhone).</p></div></div>
     <div class="step"><div class="n">2</div><div><h3 data-i18n="how.2t">ИИ-агент понимает задачу</h3><p data-i18n="how.2d">Знает свою роль и права, обращается к нужным инструментам и данным.</p></div></div>
     <div class="step"><div class="n">3</div><div><h3 data-i18n="how.3t">Работа с системами</h3><p data-i18n="how.3d">1С · база данных · генератор документов · банк · почта · распознавание.</p></div></div>
     <div class="step"><div class="n">4</div><div><h3 data-i18n="how.4t">Результат</h3><p data-i18n="how.4d">Готовый документ, запись в учёте, отчёт или ответ — текстом или голосом.</p></div></div>
@@ -321,9 +345,9 @@
   </div>
   <div class="diagram">
     <div class="tier">
-      <div class="node">💬 <span data-i18n="arch.cl1">Telegram</span></div>
-      <div class="node">📱 <span data-i18n="arch.cl2">Приложение</span></div>
-      <div class="node">🎙 <span data-i18n="arch.cl3">Голос</span></div>
+      <div class="node">🖥 <span data-i18n="arch.cl1">Приложение: Mac · Windows</span></div>
+      <div class="node">📱 <span data-i18n="arch.cl2">Приложение: Android · iPhone</span></div>
+      <div class="node">🎙 <span data-i18n="arch.cl3">Текст · голос · фото</span></div>
     </div>
     <div class="arrow">↓<small data-i18n="arch.chan">защищённый канал</small></div>
     <div class="perimeter">
@@ -487,16 +511,20 @@ const EN = {
   "case.quote":"The team does the job instead of shuffling data. Management sees the numbers every day, not at month-end.",
   "arch.eyebrow":"Architecture","arch.h2":"Where your data lives",
   "arch.sub":"For technical leaders: how the perimeter is arranged, what is processed where, and how it is secured.",
-  "arch.cl1":"Telegram","arch.cl2":"App","arch.cl3":"Voice","arch.chan":"secure channel",
+  "arch.cl1":"App: Mac · Windows","arch.cl2":"App: Android · iPhone","arch.cl3":"Text · voice · photo","arch.chan":"secure channel",
   "arch.peri":"Your perimeter — data stays with you","arch.agents":"AI agents · roles & permissions",
   "arch.tool1":"Document generator","arch.tool2":"Recognition (OCR)","arch.tool3":"Reports & analytics",
   "arch.sys1":"1C (ERP)","arch.sys2":"Analytics database","arch.sys3":"Bank","arch.sys4":"Email & calendar",
   "arch.bg":"~60 background processes · 24/7",
   "arch.b1":"Operation confirmation","arch.b2":"Access control","arch.b3":"Full logging","arch.b4":"Daily backups",
   "arch.note":"Maru is deployed on your machine or within your perimeter. Only a secure channel goes outward; credentials and documents never leave the perimeter.",
-  "hero.eyebrow":"AI assistant for business","hero.h1":"Routine to the machine.<br>Decisions to people.",
-  "hero.lead":"Maru connects your accounting system, bank, documents and shop-floor data into one layer — and turns daily routine into plain-language commands, automatic reports and forecasts.",
-  "hero.cta1":"Request a demo →","hero.cta2":"How it works",
+  "hero.eyebrow":"The assistant app for business","hero.h1":"Routine to the machine.<br>Decisions to people.",
+  "hero.lead":"Everything happens through the Maru app on your devices: Mac, Windows, Android, iPhone. It connects your accounting system, bank, documents and shop-floor data into one layer and turns routine into commands, reports and forecasts.",
+  "hero.cta1":"Request a demo →","hero.cta2":"How it works","hero.platlabel":"One app on every device:",
+  "plf.eyebrow":"Our app","plf.h2":"Everything happens through the Maru app",
+  "plf.sub":"No scattered programs. One Maru — on desktop and mobile, with a single sign-in and shared data. Text, voice, photos and documents — in one app on any device.",
+  "plf.macd":"Desktop app for Mac.","plf.wind":"Desktop app for Windows.","plf.andd":"Mobile app for Android.","plf.iosd":"Mobile app for iOS.",
+  "plf.note":"One assistant, one history, one dataset — whichever device you open Maru on. Start on the phone on the shop floor — continue on the computer in the office.",
   "dev.status":"● online","dev.me1":"🎙 “Create an invoice for the client, 200 units”","dev.bot1":"Done 👌","dev.doc":"Invoice #438.pdf — stamped",
   "dev.me2":"What was yesterday’s revenue?","dev.bot2":"Yesterday’s revenue: <b>184,500</b>. Margin 22%.","dev.mini":"from the accounting system · just now",
   "trust.1":"runs unattended","trust.2":"processes automated","trust.3":"document types","trust.4":"we create documents, not just read",
@@ -507,8 +535,8 @@ const EN = {
   "prob.3":"Management reports “take a while to compile” — numbers arrive late.",
   "prob.4":"Decisions are made on gut feel: there is no single picture or forecast.",
   "caps.eyebrow":"Capabilities today","caps.h2":"One assistant instead of ten programs",
-  "caps.sub":"An employee types or dictates a task in the messenger — Maru works with every system and returns the result.",
-  "cap.1t":"Messenger interface","cap.1d":"Text, voice, photos, documents. Nothing to learn.",
+  "caps.sub":"An employee types or dictates a task in the Maru app — and it works with every system and returns the result.",
+  "cap.1t":"One unified app","cap.1d":"Mac, Windows, Android, iPhone — text, voice, photos, documents.",
   "cap.2t":"Assistants with permissions","cap.2d":"Roles and access: some view, some edit.",
   "cap.3t":"ERP (1C) integration","cap.3d":"Reads master data and creates documents in the ledger.",
   "cap.4t":"Documents from templates","cap.4d":"Contracts, invoices, acts, waybills — in seconds, stamped.",
@@ -530,7 +558,7 @@ const EN = {
   "plat.note":"<b>This is not years of building from scratch.</b> The data, integrations and AI agents are already in place and running 24/7 — we add an analytics layer on top of a working foundation.",
   "how.eyebrow":"How it works","how.h2":"Simple on the outside. Serious on the inside.",
   "how.sub":"An employee talks to Maru like to a person. Under the hood — a link to your systems and dozens of background processes.",
-  "how.1t":"A request in plain language","how.1d":"Text, voice, a photo of an invoice or a document — right in the messenger.",
+  "how.1t":"A request in plain language","how.1d":"Text, voice, a photo of an invoice or a document — right in the Maru app (Mac, Windows, Android, iPhone).",
   "how.2t":"The AI agent understands","how.2d":"It knows its role and permissions and reaches for the right tools and data.",
   "how.3t":"Working with systems","how.3d":"ERP · database · document generator · bank · email · recognition.",
   "how.4t":"The result","how.4d":"A ready document, a ledger entry, a report or an answer — in text or voice.",
