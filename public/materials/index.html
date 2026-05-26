@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Автоматизация бизнеса — материалы</title>
+<style>
+  :root{--bg:#0e1525;--bg2:#131c30;--card:#1a2540;--line:#2a3a5e;--ink:#eef3ff;--mut:#9fb0d0;--acc:#4da3ff;--acc2:#5ee0b0;--warn:#ffcf6b}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:radial-gradient(1200px 600px at 70% -10%,#1a2747,#0e1525);color:var(--ink);min-height:100vh;line-height:1.5}
+  .wrap{max-width:1000px;margin:0 auto;padding:7vh 24px 8vh}
+  .kick{color:var(--acc);font-weight:800;letter-spacing:.14em;text-transform:uppercase;font-size:.85rem}
+  h1{font-size:2.8rem;font-weight:800;letter-spacing:-.02em;margin:.6rem 0 .6rem;line-height:1.08}
+  .lead{font-size:1.2rem;color:var(--mut);max-width:62ch}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-top:38px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px 24px 20px;display:flex;flex-direction:column;transition:.2s;text-decoration:none}
+  .card:hover{border-color:var(--acc);transform:translateY(-3px)}
+  .badge{align-self:flex-start;font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:99px;margin-bottom:14px}
+  .badge.client{background:rgba(94,224,176,.16);color:var(--acc2)}
+  .badge.internal{background:rgba(255,207,107,.16);color:var(--warn)}
+  .ico{font-size:2.2rem;margin-bottom:10px}
+  .card h2{font-size:1.45rem;color:#fff;margin-bottom:6px}
+  .card p{font-size:1rem;color:var(--mut);flex:1}
+  .actions{display:flex;gap:10px;margin-top:18px}
+  .btn{flex:1;text-align:center;text-decoration:none;font-weight:700;font-size:.98rem;padding:11px 14px;border-radius:11px;transition:.15s}
+  .btn.primary{background:var(--acc);color:#08101f}
+  .btn.primary:hover{filter:brightness(1.1)}
+  .btn.ghost{background:transparent;border:1px solid var(--line);color:var(--ink)}
+  .btn.ghost:hover{border-color:var(--acc)}
+  footer{margin-top:46px;padding-top:18px;border-top:1px solid var(--line);color:var(--mut);font-size:.9rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+  a{color:var(--acc)}
+  .note{margin-top:14px;font-size:.88rem;color:var(--warn);opacity:.85}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="kick">Автоматизация бизнеса под ключ</div>
+    <h1>Материалы презентации</h1>
+    <p class="lead">Единый ИИ-ассистент в мессенджере + слой автоматизации, который связывает учётную систему, банк, почту, документы и данные с рабочих мест.</p>
+
+    <div class="grid">
+      <div class="card">
+        <span class="badge client">для клиента</span>
+        <div class="ico">📊</div>
+        <h2>Презентация</h2>
+        <p>12 слайдов. Открывается как слайд-шоу: стрелки ← →, пробел или клик. Клавиша F — полный экран.</p>
+        <div class="actions">
+          <a class="btn primary" href="Automation_Deck.html" target="_blank">Открыть</a>
+          <a class="btn ghost" href="Deck.pdf" target="_blank">PDF</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <span class="badge client">для клиента</span>
+        <div class="ico">📄</div>
+        <h2>One-pager</h2>
+        <p>Раздаточный лист на одну страницу: возможности, эффект, форматы работы. Можно отправить или распечатать.</p>
+        <div class="actions">
+          <a class="btn primary" href="Automation_OnePager.html" target="_blank">Открыть</a>
+          <a class="btn ghost" href="OnePager.pdf" target="_blank">PDF</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <span class="badge internal">внутренний</span>
+        <div class="ico">📕</div>
+        <h2>Бриф докладчика</h2>
+        <p>Подробный функционал + рекомендации, сценарий демо, работа с возражениями. Для подготовки, не для передачи клиенту целиком.</p>
+        <div class="actions">
+          <a class="btn primary" href="Presenter_Brief.html" target="_blank">Открыть</a>
+          <a class="btn ghost" href="Brief.pdf" target="_blank">PDF</a>
+        </div>
+      </div>
+    </div>
+
+    <p class="note">⚠️ Жёлтым отмечен внутренний документ — содержит заметки «не для зала». Сайт под паролем; кому выдан доступ — видит всё, включая бриф. <a href="/logout">Выйти</a></p>
+
+    <footer>
+      <span>Автоматизация бизнеса · материалы для презентации</span>
+      <span id="dt"></span>
+    </footer>
+  </div>
+  <script>document.getElementById('dt').textContent=new Date().toLocaleDateString('ru-RU',{year:'numeric',month:'long',day:'numeric'});</script>
+</body>
+</html>

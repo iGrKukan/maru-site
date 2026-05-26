@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maru — ИИ-ассистент, который ведёт операции вашего бизнеса</title>
+<meta name="description" content="Maru связывает учётную систему, банк, документы и данные цехов в один слой и превращает рутину в команды на естественном языке, автоматические отчёты и прогнозы.">
+<style>
+  :root{
+    --bg:#1f1e1d; --bg2:#191817; --surface:#2b2a28; --surface2:#211f1e;
+    --ink:#edebe6; --soft:#a8a59c; --line:#3a3935;
+    --accent:#d97757; --accent-2:#f09050; --accent-hi:#ffcca1;
+    --glow:rgba(217,119,87,.22);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+  a{color:inherit;text-decoration:none}
+  h1,h2,h3{font-weight:600;letter-spacing:-.02em;line-height:1.08;color:#fff}
+  .serif{font-family:Georgia,"Times New Roman",serif}
+  .accent{color:var(--accent)}
+  .soft{color:var(--soft)}
+
+  nav{position:sticky;top:0;z-index:50;backdrop-filter:saturate(1.4) blur(14px);
+    background:rgba(31,30,29,.72);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;gap:28px;height:64px}
+  .brand{display:flex;align-items:center;gap:11px;font-weight:700}
+  .brand .wm{font-family:Georgia,serif;font-size:1.5rem;letter-spacing:.06em;color:var(--accent)}
+  .nav .links{display:flex;gap:24px;margin-left:auto}
+  .nav .links a{color:var(--soft);font-size:.95rem}
+  .nav .links a:hover{color:var(--ink)}
+  .btn{display:inline-flex;align-items:center;gap:8px;border-radius:13px;padding:11px 20px;font-weight:600;font-size:.95rem;cursor:pointer;border:1px solid transparent;transition:.18s;white-space:nowrap;font-family:inherit}
+  .btn.primary{background:var(--accent);color:#fff}
+  .btn.primary:hover{background:#e0825f;box-shadow:0 8px 24px -8px var(--glow)}
+  .btn.ghost{border-color:var(--line);color:var(--ink);background:transparent}
+  .btn.ghost:hover{border-color:var(--accent);color:#fff}
+  .nav .btn{padding:9px 16px}
+  .lang{padding:7px 12px!important;font-size:.85rem;letter-spacing:.04em}
+  @media(max-width:980px){.nav .links{display:none}}
+
+  .hero{position:relative;padding:92px 0 70px}
+  .hero::before{content:"";position:absolute;top:-140px;left:50%;transform:translateX(-30%);
+    width:760px;height:520px;background:radial-gradient(closest-side,var(--glow),transparent 70%);filter:blur(20px);z-index:0}
+  .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:1.05fr .95fr;gap:54px;align-items:center}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.82rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);
+    border:1px solid var(--line);border-radius:99px;padding:6px 14px;background:var(--surface2)}
+  h1.headline{font-size:3.5rem;margin:22px 0 18px}
+  .hero p.lead{font-size:1.28rem;color:var(--soft);max-width:36ch}
+  .hero .cta{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap}
+  @media(max-width:880px){.hero-grid{grid-template-columns:1fr;gap:36px}h1.headline{font-size:2.5rem}}
+
+  .device{justify-self:end;width:330px;max-width:100%;background:linear-gradient(180deg,#262422,#1c1b1a);
+    border:1px solid var(--line);border-radius:30px;padding:18px;box-shadow:0 40px 80px -30px #000,0 0 0 1px rgba(255,255,255,.02) inset}
+  .device .top{display:flex;align-items:center;gap:10px;padding:4px 6px 14px;border-bottom:1px solid var(--line)}
+  .avatar{width:30px;height:30px;border-radius:9px;background:radial-gradient(circle at 35% 30%,#f3a572,#c25a30);
+    color:#2a1206;font-family:Georgia,serif;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:1.05rem;box-shadow:0 0 14px -2px var(--glow)}
+  .device .top .nm{font-weight:600;font-size:1.05rem}
+  .device .top .st{font-size:.72rem;color:#7fcf9f;margin-left:auto}
+  .chat{display:flex;flex-direction:column;gap:9px;padding:16px 4px 6px}
+  .msg{max-width:84%;padding:10px 13px;border-radius:16px;font-size:.9rem;line-height:1.4}
+  .msg.me{align-self:flex-end;background:#f3e0d6;color:#1f1e1d;border-bottom-right-radius:5px}
+  .msg.bot{align-self:flex-start;background:var(--surface);border:1px solid var(--line);border-bottom-left-radius:5px}
+  .msg .mini{font-size:.72rem;color:var(--soft);margin-top:4px}
+  .doc{display:flex;align-items:center;gap:9px;margin-top:8px;background:var(--bg);border:1px solid var(--line);border-radius:11px;padding:8px 11px;font-size:.82rem}
+  .doc .ic{font-size:1.1rem}
+  .voice{display:flex;align-items:center;gap:8px}
+  .voice .bars{display:flex;gap:3px;align-items:center}
+  .voice .bars i{width:3px;background:#b9532f;border-radius:2px;animation:vb 1s infinite ease-in-out}
+  .voice .bars i:nth-child(2){animation-delay:.15s}.voice .bars i:nth-child(3){animation-delay:.3s}
+  .voice .bars i:nth-child(4){animation-delay:.45s}.voice .bars i:nth-child(5){animation-delay:.6s}
+  @keyframes vb{0%,100%{height:7px}50%{height:18px}}
+
+  .trust{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg2)}
+  .trust .row{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding:30px 0}
+  .stat .v{font-size:2.1rem;font-weight:700;color:#fff}
+  .stat .v b{color:var(--accent)}
+  .stat .l{font-size:.92rem;color:var(--soft);margin-top:2px}
+  @media(max-width:760px){.trust .row{grid-template-columns:repeat(2,1fr);gap:18px}}
+
+  section.block{padding:84px 0}
+  .sec-head{max-width:64ch;margin-bottom:44px}
+  .sec-head .eyebrow{margin-bottom:16px}
+  .sec-head h2{font-size:2.3rem;margin-bottom:14px}
+  .sec-head p{font-size:1.15rem;color:var(--soft)}
+  @media(max-width:880px){.sec-head h2{font-size:1.8rem}}
+
+  .problems{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .prob{background:var(--surface2);border:1px solid var(--line);border-radius:16px;padding:20px 22px;display:flex;gap:14px}
+  .prob .x{color:var(--accent);font-size:1.3rem;flex:0 0 auto}
+  .prob p{color:var(--soft);font-size:1.02rem}
+  @media(max-width:760px){.problems{grid-template-columns:1fr}}
+
+  .caps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .cap{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px;transition:.18s}
+  .cap:hover{border-color:var(--accent);transform:translateY(-3px)}
+  .cap .ic{font-size:1.7rem}
+  .cap h3{font-size:1.12rem;margin:12px 0 6px}
+  .cap p{font-size:.94rem;color:var(--soft);line-height:1.45}
+  @media(max-width:980px){.caps{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:520px){.caps{grid-template-columns:1fr}}
+
+  .platform{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .cap .badge{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);background:rgba(217,119,87,.12);border-radius:99px;padding:3px 9px;margin-top:12px}
+  .plat-note{margin-top:30px;background:var(--surface2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:14px;padding:18px 22px;color:var(--soft);font-size:1.05rem}
+  .plat-note b{color:var(--ink)}
+
+  .how{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .flow{display:flex;flex-direction:column;gap:14px;max-width:840px;margin:0 auto}
+  .flow .step{display:flex;align-items:flex-start;gap:18px;background:var(--surface2);border:1px solid var(--line);border-radius:16px;padding:20px 22px}
+  .flow .n{flex:0 0 auto;width:40px;height:40px;border-radius:11px;background:var(--accent);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:1.1rem}
+  .flow .step h3{font-size:1.12rem;margin-bottom:4px}
+  .flow .step p{color:var(--soft);font-size:.98rem}
+  .flow .par{text-align:center;color:var(--soft);font-size:.92rem;margin:6px 0;letter-spacing:.04em}
+
+  .demos{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .demo{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:24px}
+  .demo .tag{font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+  .demo h3{font-size:1.12rem;margin:10px 0 8px}
+  .demo p{color:var(--soft);font-size:.96rem}
+  .demo .wow{margin-top:14px;font-size:.86rem;color:var(--accent-hi);font-weight:600}
+  @media(max-width:860px){.demos{grid-template-columns:1fr}}
+
+  .results{display:grid;grid-template-columns:1.2fr .8fr;gap:36px;align-items:center}
+  table.roi{width:100%;border-collapse:collapse;font-size:1rem}
+  table.roi th,table.roi td{text-align:left;padding:13px 12px;border-bottom:1px solid var(--line)}
+  table.roi th{color:var(--accent);font-size:.8rem;text-transform:uppercase;letter-spacing:.06em}
+  table.roi td.now{color:var(--accent-hi);font-weight:600}
+  .results .big{background:linear-gradient(160deg,var(--surface),var(--surface2));border:1px solid var(--line);border-radius:20px;padding:34px;text-align:center}
+  .results .big .v{font-size:3.4rem;font-weight:700;color:var(--accent)}
+  .results .big .l{color:var(--soft);margin-top:6px}
+  @media(max-width:880px){.results{grid-template-columns:1fr}}
+
+  .ent{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .ent .c{background:var(--surface2);border:1px solid var(--line);border-radius:16px;padding:22px}
+  .ent .c .ic{font-size:1.5rem;color:var(--accent)}
+  .ent .c h3{font-size:1.08rem;margin:10px 0 6px}
+  .ent .c p{color:var(--soft);font-size:.95rem}
+  @media(max-width:860px){.ent{grid-template-columns:1fr}}
+
+  .models{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:8px}
+  .model{border:1px solid var(--line);border-radius:20px;padding:28px;background:var(--surface)}
+  .model.a{border-color:var(--accent)}
+  .model .pill{display:inline-block;font-size:.74rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:4px 11px;border-radius:99px;margin-bottom:14px}
+  .model.a .pill{background:rgba(217,119,87,.16);color:var(--accent)}
+  .model.b .pill{background:var(--surface2);color:var(--soft)}
+  .model h3{font-size:1.35rem;margin-bottom:8px}
+  .model p{color:var(--soft)}
+  @media(max-width:760px){.models{grid-template-columns:1fr}}
+
+  /* case */
+  .case-ctx{background:var(--surface2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:16px;padding:20px 24px;margin-bottom:22px;color:var(--soft);font-size:1.05rem}
+  .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .metric{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px 16px;text-align:center}
+  .metric .v{font-size:2.3rem;font-weight:700;color:var(--accent);line-height:1.05}
+  .metric .l{color:var(--soft);font-size:.9rem;margin-top:8px;line-height:1.35}
+  .case-quote{margin:26px auto 0;font-size:1.25rem;color:#fff;text-align:center;max-width:58ch;line-height:1.45}
+  @media(max-width:980px){.metrics{grid-template-columns:repeat(2,1fr)}}
+
+  /* architecture diagram */
+  .diagram{max-width:900px;margin:0 auto}
+  .diagram .tier{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+  .diagram .node{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:12px 18px;font-size:.95rem;color:var(--ink);white-space:nowrap}
+  .diagram .node.big{background:var(--surface2);font-weight:600}
+  .diagram .arrow{text-align:center;color:var(--soft);font-size:1.3rem;margin:8px 0;position:relative;height:1.5em;width:100%}
+  .diagram .arrow small{position:absolute;left:50%;margin-left:16px;top:50%;transform:translateY(-50%);font-size:.74rem;color:var(--soft);white-space:nowrap}
+  .perimeter{border:1.5px dashed var(--accent);border-radius:22px;padding:28px 20px 22px;position:relative;background:rgba(217,119,87,.05)}
+  .perimeter>.tag{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--bg);color:var(--accent);font-size:.74rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:3px 14px;border:1px solid var(--accent);border-radius:99px;white-space:nowrap}
+  .perimeter .inner{display:flex;flex-direction:column;align-items:center}
+  .sec-badges{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:24px}
+  .sec-badge{background:var(--surface2);border:1px solid var(--line);border-radius:99px;padding:8px 16px;font-size:.9rem;color:var(--soft)}
+  .sec-badge b{color:var(--accent)}
+  .diagram-note{text-align:center;max-width:62ch;margin:22px auto 0;font-size:.98rem}
+
+  .cta-sec{background:var(--bg2);border-top:1px solid var(--line)}
+  .cta-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+  .cta-grid h2{font-size:2.2rem;margin-bottom:14px}
+  .cta-grid .lead{color:var(--soft);font-size:1.12rem;margin-bottom:22px}
+  .form{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:30px}
+  .form label{display:block;font-size:.85rem;color:var(--soft);margin:14px 0 6px}
+  .form input,.form textarea{width:100%;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:1rem;font-family:inherit}
+  .form input:focus,.form textarea:focus{outline:none;border-color:var(--accent)}
+  .form textarea{resize:vertical;min-height:84px}
+  .form .btn{width:100%;justify-content:center;margin-top:22px}
+  .form .ok{background:rgba(127,207,159,.12);border:1px solid #3c5a47;color:#9fe0b8;border-radius:12px;padding:14px;text-align:center;display:none}
+  .form .err{color:var(--accent-hi);font-size:.9rem;margin-top:10px;display:none}
+  @media(max-width:880px){.cta-grid{grid-template-columns:1fr;gap:28px}.cta-grid h2{font-size:1.8rem}}
+
+  footer{border-top:1px solid var(--line);padding:34px 0;color:var(--soft);font-size:.92rem}
+  .foot{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .foot .wm{font-family:Georgia,serif;font-size:1.25rem;letter-spacing:.06em;color:var(--accent)}
+  .foot a{color:var(--soft)}.foot a:hover{color:var(--ink)}
+  .foot .right{margin-left:auto;display:flex;gap:18px}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap nav">
+  <a class="brand" href="/"><span class="wm">Maru</span></a>
+  <div class="links">
+    <a href="#caps" data-i18n="nav.caps">Возможности</a>
+    <a href="#platform" data-i18n="nav.platform">Платформа</a>
+    <a href="#how" data-i18n="nav.how">Как работает</a>
+    <a href="#results" data-i18n="nav.results">Результат</a>
+    <a href="#case" data-i18n="nav.case">Кейс</a>
+    <a href="#architecture" data-i18n="nav.arch">Архитектура</a>
+    <a href="#enterprise" data-i18n="nav.ent">Внедрение</a>
+  </div>
+  <button class="btn ghost lang" id="langBtn">EN</button>
+  <a class="btn primary" href="#contact" data-i18n="nav.cta">Запросить демо</a>
+</div></nav>
+
+<!-- HERO -->
+<header class="hero"><div class="wrap hero-grid">
+  <div>
+    <span class="eyebrow" data-i18n="hero.eyebrow">ИИ-ассистент для бизнеса</span>
+    <h1 class="headline" data-i18n="hero.h1">Рутина — машине.<br>Решения — людям.</h1>
+    <p class="lead" data-i18n="hero.lead">Maru связывает вашу учётную систему, банк, документы и данные с рабочих мест в один слой — и превращает рутину в команды на обычном языке, автоматические отчёты и прогнозы.</p>
+    <div class="cta">
+      <a class="btn primary" href="#contact" data-i18n="hero.cta1">Запросить демонстрацию →</a>
+      <a class="btn ghost" href="#how" data-i18n="hero.cta2">Как это работает</a>
+    </div>
+  </div>
+  <div class="device">
+    <div class="top"><span class="avatar">M</span><span class="nm serif accent">Maru</span><span class="st" data-i18n="dev.status">● на связи</span></div>
+    <div class="chat">
+      <div class="msg me"><div class="voice"><span data-i18n="dev.me1">🎙 «Сделай счёт для клиента на 200 единиц»</span><span class="bars"><i></i><i></i><i></i><i></i><i></i></span></div></div>
+      <div class="msg bot"><span data-i18n="dev.bot1">Готово 👌</span><div class="doc"><span class="ic">📄</span><span data-i18n="dev.doc">Счёт №438.pdf — с печатью</span></div></div>
+      <div class="msg me" data-i18n="dev.me2">Какая выручка за вчера?</div>
+      <div class="msg bot"><span data-i18n="dev.bot2">Выручка вчера: <b>184 500</b>. Маржа 22%.</span><div class="mini" data-i18n="dev.mini">из учётной системы · обновлено сейчас</div></div>
+    </div>
+  </div>
+</div></header>
+
+<!-- TRUST -->
+<div class="trust"><div class="wrap"><div class="row">
+  <div class="stat"><div class="v"><b>24/7</b></div><div class="l" data-i18n="trust.1">работает без присмотра</div></div>
+  <div class="stat"><div class="v"><b>~60</b></div><div class="l" data-i18n="trust.2">процессов автоматизировано</div></div>
+  <div class="stat"><div class="v"><b>60+</b></div><div class="l" data-i18n="trust.3">типов документов</div></div>
+  <div class="stat"><div class="v"><b>1С</b></div><div class="l" data-i18n="trust.4">создаём документы, не только читаем</div></div>
+</div></div></div>
+
+<!-- PROBLEM -->
+<section class="block"><div class="wrap">
+  <div class="sec-head">
+    <span class="eyebrow" data-i18n="prob.eyebrow">Знакомо?</span>
+    <h2 data-i18n="prob.h2">Бизнес тонет в рутине</h2>
+    <p data-i18n="prob.sub">Чем больше операций, тем больше ручной работы, двойного ввода и потерянных часов. Команда занята не делом, а перекладыванием данных между программами.</p>
+  </div>
+  <div class="problems">
+    <div class="prob"><span class="x">✕</span><p data-i18n="prob.1">Одни и те же документы заполняются вручную — часы каждый день.</p></div>
+    <div class="prob"><span class="x">✕</span><p data-i18n="prob.2">Данные переписываются по два-три раза между 1С, банком, почтой и Excel.</p></div>
+    <div class="prob"><span class="x">✕</span><p data-i18n="prob.3">Отчёт руководителю «долго собирать» — цифры приходят с опозданием.</p></div>
+    <div class="prob"><span class="x">✕</span><p data-i18n="prob.4">Решения принимаются по интуиции: нет единой картины и прогноза.</p></div>
+  </div>
+</div></section>
+
+<!-- CAPABILITIES (today) -->
+<section class="block" id="caps"><div class="wrap">
+  <div class="sec-head">
+    <span class="eyebrow" data-i18n="caps.eyebrow">Возможности сегодня</span>
+    <h2 data-i18n="caps.h2">Один ассистент вместо десяти программ</h2>
+    <p data-i18n="caps.sub">Сотрудник пишет или надиктовывает задачу в мессенджере — Maru сам работает со всеми системами и возвращает результат.</p>
+  </div>
+  <div class="caps">
+    <div class="cap"><div class="ic">💬</div><h3 data-i18n="cap.1t">Мессенджер-интерфейс</h3><p data-i18n="cap.1d">Текст, голос, фото, документы. Осваивать нечего.</p></div>
+    <div class="cap"><div class="ic">👥</div><h3 data-i18n="cap.2t">Ассистенты с правами</h3><p data-i18n="cap.2d">Роли и доступы: кто-то смотрит, кто-то меняет.</p></div>
+    <div class="cap"><div class="ic">🔗</div><h3 data-i18n="cap.3t">Интеграция с 1С</h3><p data-i18n="cap.3d">Чтение справочников и создание документов в учёте.</p></div>
+    <div class="cap"><div class="ic">📄</div><h3 data-i18n="cap.4t">Документы из шаблонов</h3><p data-i18n="cap.4d">Договоры, счета, акты, накладные — за секунды, с печатью.</p></div>
+    <div class="cap"><div class="ic">📷</div><h3 data-i18n="cap.5t">Первичка по фото</h3><p data-i18n="cap.5d">Снял накладную → проверил → запись в учёте.</p></div>
+    <div class="cap"><div class="ic">📲</div><h3 data-i18n="cap.6t">Данные с рабочих мест</h3><p data-i18n="cap.6d">Приложение на местах → облако → общая база.</p></div>
+    <div class="cap"><div class="ic">📊</div><h3 data-i18n="cap.7t">Автоотчёты с ИИ</h3><p data-i18n="cap.7d">Оплата труда, P&L, остатки — сами приходят в мессенджер.</p></div>
+    <div class="cap"><div class="ic">🌐</div><h3 data-i18n="cap.8t">Внешние интеграции</h3><p data-i18n="cap.8d">Банк, курсы валют, почта, календарь — на автомате.</p></div>
+  </div>
+</div></section>
+
+<!-- PLATFORM (horizon) -->
+<section class="block platform" id="platform"><div class="wrap">
+  <div class="sec-head">
+    <span class="eyebrow" data-i18n="plat.eyebrow">Перспектива</span>
+    <h2 data-i18n="plat.h2">От ассистента — к операционной платформе</h2>
+    <p data-i18n="plat.sub">Всё ваше — учёт, банк, документы, данные цехов и логистики — уже сходится в одном слое, а поверх него работают ИИ-агенты с доступом к инструментам. На этом фундаменте открывается следующий уровень.</p>
+  </div>
+  <div class="caps">
+    <div class="cap"><div class="ic">🔮</div><h3 data-i18n="plat.1t">Прогноз и планирование</h3><p data-i18n="plat.1d">Прогноз спроса и выручки, кассовые разрывы заранее, план производства и закупок по точке заказа.</p><span class="badge" data-i18n="badge.next">в дорожной карте</span></div>
+    <div class="cap"><div class="ic">📡</div><h3 data-i18n="plat.2t">Производство в реальном времени</h3><p data-i18n="plat.2d">Живые дашборды выработки, выход и брак по станкам и сменам, узкие места, простои, эффективность (OEE).</p><span class="badge" data-i18n="badge.next">в дорожной карте</span></div>
+    <div class="cap"><div class="ic">🛠</div><h3 data-i18n="plat.3t">Предиктивное обслуживание</h3><p data-i18n="plat.3d">Прогноз ТО техники, аномальный расход и утечки топлива, стоимость владения по каждой единице.</p><span class="badge" data-i18n="badge.next">в дорожной карте</span></div>
+    <div class="cap"><div class="ic">🧬</div><h3 data-i18n="plat.4t">Сквозная прослеживаемость</h3><p data-i18n="plat.4d">От партии сырья до отгрузки клиенту по QR; сертификаты, привязанные к партии; разбор рекламаций.</p><span class="badge" data-i18n="badge.next">в дорожной карте</span></div>
+    <div class="cap"><div class="ic">🗣</div><h3 data-i18n="plat.5t">Разговорная аналитика</h3><p data-i18n="plat.5d">«Спроси свой бизнес»: маржа по клиентам, сравнение смен, динамика — словами и с графиками.</p><span class="badge" data-i18n="badge.next">в дорожной карте</span></div>
+    <div class="cap"><div class="ic">📚</div><h3 data-i18n="plat.6t">Интеллект документов</h3><p data-i18n="plat.6d">Семантический поиск по договорам и переписке, извлечение обязательств и сроков, сверка «заказ–приёмка–счёт».</p><span class="badge" data-i18n="badge.next">в дорожной карте</span></div>
+    <div class="cap"><div class="ic">🚨</div><h3 data-i18n="plat.7t">Аномалии и злоупотребления</h3><p data-i18n="plat.7d">Дубли платежей, нетипичные операции, «мёртвые души» в зарплате, утечки ГСМ.</p><span class="badge" data-i18n="badge.next">в дорожной карте</span></div>
+    <div class="cap"><div class="ic">🔀</div><h3 data-i18n="plat.8t">Оркестрация согласований</h3><p data-i18n="plat.8d">Маршруты утверждений (платёж выше лимита → директору), сроки, эскалации — в мессенджере.</p><span class="badge" data-i18n="badge.next">в дорожной карте</span></div>
+  </div>
+  <div class="plat-note" data-i18n="plat.note"><b>Это не годы разработки с нуля.</b> Данные, интеграции и ИИ-агенты уже на месте и работают 24/7 — добавляется аналитический слой поверх готового фундамента.</div>
+</div></section>
+
+<!-- HOW IT WORKS -->
+<section class="block how" id="how"><div class="wrap">
+  <div class="sec-head">
+    <span class="eyebrow" data-i18n="how.eyebrow">Как это работает</span>
+    <h2 data-i18n="how.h2">Просто — снаружи. Серьёзно — внутри.</h2>
+    <p data-i18n="how.sub">Сотрудник общается с Maru как с человеком. Под капотом — связка с вашими системами и десятки фоновых процессов.</p>
+  </div>
+  <div class="flow">
+    <div class="step"><div class="n">1</div><div><h3 data-i18n="how.1t">Запрос на обычном языке</h3><p data-i18n="how.1d">Текст, голос, фото накладной или документ — прямо в мессенджере.</p></div></div>
+    <div class="step"><div class="n">2</div><div><h3 data-i18n="how.2t">ИИ-агент понимает задачу</h3><p data-i18n="how.2d">Знает свою роль и права, обращается к нужным инструментам и данным.</p></div></div>
+    <div class="step"><div class="n">3</div><div><h3 data-i18n="how.3t">Работа с системами</h3><p data-i18n="how.3d">1С · база данных · генератор документов · банк · почта · распознавание.</p></div></div>
+    <div class="step"><div class="n">4</div><div><h3 data-i18n="how.4t">Результат</h3><p data-i18n="how.4d">Готовый документ, запись в учёте, отчёт или ответ — текстом или голосом.</p></div></div>
+    <div class="par" data-i18n="how.par">— параллельно, 24/7, без человека —</div>
+    <div class="step"><div class="n">∞</div><div><h3 data-i18n="how.5t">~60 фоновых процессов</h3><p data-i18n="how.5d">Синхронизация, сбор данных, классификация документов, мониторинг, рассылка отчётов, резервные копии.</p></div></div>
+  </div>
+</div></section>
+
+<!-- ARCHITECTURE -->
+<section class="block" id="architecture"><div class="wrap">
+  <div class="sec-head">
+    <span class="eyebrow" data-i18n="arch.eyebrow">Архитектура</span>
+    <h2 data-i18n="arch.h2">Где живут ваши данные</h2>
+    <p data-i18n="arch.sub">Для технических руководителей: как устроен контур, что где обрабатывается и как это защищено.</p>
+  </div>
+  <div class="diagram">
+    <div class="tier">
+      <div class="node">💬 <span data-i18n="arch.cl1">Telegram</span></div>
+      <div class="node">📱 <span data-i18n="arch.cl2">Приложение</span></div>
+      <div class="node">🎙 <span data-i18n="arch.cl3">Голос</span></div>
+    </div>
+    <div class="arrow">↓<small data-i18n="arch.chan">защищённый канал</small></div>
+    <div class="perimeter">
+      <span class="tag" data-i18n="arch.peri">Ваш контур — данные остаются у вас</span>
+      <div class="inner">
+        <div class="tier"><div class="node big">🤖 <span data-i18n="arch.agents">ИИ-агенты · роли и права</span></div></div>
+        <div class="arrow">↓</div>
+        <div class="tier">
+          <div class="node">📄 <span data-i18n="arch.tool1">Генератор документов</span></div>
+          <div class="node">🔎 <span data-i18n="arch.tool2">Распознавание (OCR)</span></div>
+          <div class="node">📊 <span data-i18n="arch.tool3">Отчёты и аналитика</span></div>
+        </div>
+        <div class="arrow">↓</div>
+        <div class="tier">
+          <div class="node">🔗 <span data-i18n="arch.sys1">1С</span></div>
+          <div class="node">🗄 <span data-i18n="arch.sys2">Аналитическая БД</span></div>
+          <div class="node">🏦 <span data-i18n="arch.sys3">Банк</span></div>
+          <div class="node">✉️ <span data-i18n="arch.sys4">Почта и календарь</span></div>
+        </div>
+        <div class="arrow">↓</div>
+        <div class="tier"><div class="node big">♾ <span data-i18n="arch.bg">~60 фоновых процессов · 24/7</span></div></div>
+      </div>
+    </div>
+    <div class="sec-badges">
+      <div class="sec-badge"><b>✓</b> <span data-i18n="arch.b1">Подтверждение операций</span></div>
+      <div class="sec-badge"><b>🔐</b> <span data-i18n="arch.b2">Разграничение прав</span></div>
+      <div class="sec-badge"><b>🧾</b> <span data-i18n="arch.b3">Полное логирование</span></div>
+      <div class="sec-badge"><b>♻️</b> <span data-i18n="arch.b4">Ежедневные бэкапы</span></div>
+    </div>
+    <p class="diagram-note soft" data-i18n="arch.note">Maru разворачивается на вашей машине или в вашем контуре. Наружу — только защищённый канал; учётные данные и документы не покидают периметр.</p>
+  </div>
+</div></section>
+
+<!-- DEMO -->
+<section class="block how"><div class="wrap">
+  <div class="sec-head">
+    <span class="eyebrow" data-i18n="demo.eyebrow">В деле</span>
+    <h2 data-i18n="demo.h2">Три минуты — три результата</h2>
+  </div>
+  <div class="demos">
+    <div class="demo"><div class="tag" data-i18n="demo.1tag">Голос → документ</div><h3 data-i18n="demo.1t">Счёт за минуту</h3><p data-i18n="demo.1d">«Сделай счёт для клиента на 200 единиц» — и приходит готовый PDF с печатью.</p><div class="wow" data-i18n="demo.1w">Голос → готовый документ</div></div>
+    <div class="demo"><div class="tag" data-i18n="demo.2tag">Фото → учёт</div><h3 data-i18n="demo.2t">Накладная в систему</h3><p data-i18n="demo.2d">Фото накладной → распознавание → подтверждение → запись в учётной системе.</p><div class="wow" data-i18n="demo.2w">Бумажка стала записью</div></div>
+    <div class="demo"><div class="tag" data-i18n="demo.3tag">Вопрос → цифра</div><h3 data-i18n="demo.3t">Бизнес на ладони</h3><p data-i18n="demo.3d">«Какая выручка за вчера?» — мгновенный ответ из ваших данных.</p><div class="wow" data-i18n="demo.3w">Спросил как у человека</div></div>
+  </div>
+</div></section>
+
+<!-- RESULTS -->
+<section class="block" id="results"><div class="wrap">
+  <div class="sec-head">
+    <span class="eyebrow" data-i18n="res.eyebrow">Результат</span>
+    <h2 data-i18n="res.h2">Что это заменяет</h2>
+  </div>
+  <div class="results">
+    <table class="roi">
+      <tr><th data-i18n="res.th1">Процесс</th><th data-i18n="res.th2">Было</th><th data-i18n="res.th3">Стало</th></tr>
+      <tr><td data-i18n="res.r1">Комплект документов</td><td class="soft" data-i18n="res.r1a">~1 час вручную</td><td class="now" data-i18n="res.r1b">~1 минута</td></tr>
+      <tr><td data-i18n="res.r2">Ввод входящей накладной</td><td class="soft" data-i18n="res.r2a">~20 мин / документ</td><td class="now" data-i18n="res.r2b">фото + подтверждение</td></tr>
+      <tr><td data-i18n="res.r3">Расчёт оплаты труда</td><td class="soft" data-i18n="res.r3a">часы расчётов</td><td class="now" data-i18n="res.r3b">автоматически</td></tr>
+      <tr><td data-i18n="res.r4">Управленческий отчёт / P&L</td><td class="soft" data-i18n="res.r4a">до дня в Excel</td><td class="now" data-i18n="res.r4b">секунды</td></tr>
+      <tr><td data-i18n="res.r5">Сверка банка, остатки</td><td class="soft" data-i18n="res.r5a">ручная выгрузка</td><td class="now" data-i18n="res.r5b">автоматически</td></tr>
+    </table>
+    <div class="big"><div class="v">3–4 ч</div><div class="l" data-i18n="res.big">ручной работы в день снимается с команды — плюс меньше ошибок и полная прозрачность</div></div>
+  </div>
+</div></section>
+
+<!-- CASE -->
+<section class="block how" id="case"><div class="wrap">
+  <div class="sec-head">
+    <span class="eyebrow" data-i18n="case.eyebrow">Кейс</span>
+    <h2 data-i18n="case.h2">Что это дало на практике</h2>
+    <p data-i18n="case.sub">Результаты внедрения в действующей производственно-торговой группе: несколько юридических лиц, экспорт, автопарк, сменное производство. Данные обезличены.</p>
+  </div>
+  <div class="case-ctx" data-i18n="case.ctx">Было: разрозненные системы — 1С, банк, почта, мобильные данные с цехов и логистики — и ручной документооборот. Стало: всё сведено в один слой, рутина переведена в команды на обычном языке и автоматические отчёты.</div>
+  <div class="metrics">
+    <div class="metric"><div class="v" data-i18n="case.m1v">3–4 ч</div><div class="l" data-i18n="case.m1">ручной работы в день снято с команды</div></div>
+    <div class="metric"><div class="v" data-i18n="case.m2v">~60</div><div class="l" data-i18n="case.m2">процессов работают 24/7</div></div>
+    <div class="metric"><div class="v" data-i18n="case.m3v">60+</div><div class="l" data-i18n="case.m3">типов документов автоматически</div></div>
+    <div class="metric"><div class="v" data-i18n="case.m4v">~85%+</div><div class="l" data-i18n="case.m4">точность распознавания первички</div></div>
+    <div class="metric"><div class="v" data-i18n="case.m5v">1 мин</div><div class="l" data-i18n="case.m5">комплект документов вместо ~1 часа</div></div>
+    <div class="metric"><div class="v" data-i18n="case.m6v">&lt;1 сек</div><div class="l" data-i18n="case.m6">управленческий отчёт вместо дня в Excel</div></div>
+    <div class="metric"><div class="v" data-i18n="case.m7v">4+</div><div class="l" data-i18n="case.m7">системы сведены в один слой</div></div>
+    <div class="metric"><div class="v" data-i18n="case.m8v">0</div><div class="l" data-i18n="case.m8">потерь данных: бэкапы и самоконтроль</div></div>
+  </div>
+  <p class="case-quote" data-i18n="case.quote">Команда занимается делом, а не перекладыванием данных. Руководитель видит цифры каждый день, а не в конце месяца.</p>
+</div></section>
+
+<!-- ENTERPRISE -->
+<section class="block" id="enterprise"><div class="wrap">
+  <div class="sec-head">
+    <span class="eyebrow" data-i18n="ent.eyebrow">Для крупного бизнеса</span>
+    <h2 data-i18n="ent.h2">Контроль, безопасность, надёжность</h2>
+    <p data-i18n="ent.sub">Maru уже работает в действующей компании 24/7 — это эксплуатация, а не демо ради показа.</p>
+  </div>
+  <div class="ent">
+    <div class="c"><div class="ic">✓</div><h3 data-i18n="ent.1t">Подтверждение операций</h3><p data-i18n="ent.1d">Перед любой записью в учёт — предпросмотр и подтверждение человеком.</p></div>
+    <div class="c"><div class="ic">🔐</div><h3 data-i18n="ent.2t">Разграничение прав</h3><p data-i18n="ent.2d">Роли и доступы по сотрудникам. Полное логирование действий.</p></div>
+    <div class="c"><div class="ic">🏠</div><h3 data-i18n="ent.3t">Данные у вас</h3><p data-i18n="ent.3d">Обработка на вашей машине/контуре. Модель размещения — под ваши требования.</p></div>
+    <div class="c"><div class="ic">♻️</div><h3 data-i18n="ent.4t">Отказоустойчивость</h3><p data-i18n="ent.4d">Автозапуск, авто-рестарт сервисов, ежедневные резервные копии.</p></div>
+    <div class="c"><div class="ic">📈</div><h3 data-i18n="ent.5t">Самоконтроль</h3><p data-i18n="ent.5d">Ежечасная проверка здоровья системы и уведомления при сбоях.</p></div>
+    <div class="c"><div class="ic">🧩</div><h3 data-i18n="ent.6t">Под вашу 1С</h3><p data-i18n="ent.6d">Адаптация под конфигурацию и документы — часть внедрения.</p></div>
+  </div>
+  <div style="margin-top:34px">
+    <div class="models">
+      <div class="model a"><span class="pill" data-i18n="model.a.pill">Доступно сейчас</span><h3 data-i18n="model.a.t">Автоматизация под ключ</h3><p data-i18n="model.a.d">Анализируем процессы и переносим готовые, обкатанные блоки под вашу учётную систему и документы. Внедрение + поддержка, старт с 1–2 процессов.</p></div>
+      <div class="model b"><span class="pill" data-i18n="model.b.pill">Развитие</span><h3 data-i18n="model.b.t">Maru в облаке</h3><p data-i18n="model.b.d">Ассистент в облаке, защищённый коннектор к вашей 1С, оплата по подписке. Масштабируемая платформа — уже строится.</p></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- CONTACT -->
+<section class="block cta-sec" id="contact"><div class="wrap">
+  <div class="cta-grid">
+    <div>
+      <h2 data-i18n="c.h2">Покажем Maru на ваших процессах</h2>
+      <p class="lead" data-i18n="c.lead">Оставьте заявку — проведём демонстрацию на ваших типовых документах, выберем 1–2 процесса для быстрого старта и посчитаем вашу экономию.</p>
+      <p class="soft" data-i18n="c.note">Заявка приходит нам мгновенно. Ответим в течение рабочего дня.</p>
+    </div>
+    <form class="form" id="leadForm">
+      <div class="ok" id="leadOk" data-i18n="c.ok">Спасибо! Заявка получена — скоро свяжемся.</div>
+      <div id="leadFields">
+        <label data-i18n="c.name">Ваше имя *</label>
+        <input name="name" required autocomplete="name">
+        <label data-i18n="c.contact">Телефон, e-mail или Telegram *</label>
+        <input name="contact" required>
+        <label data-i18n="c.company">Компания</label>
+        <input name="company">
+        <label data-i18n="c.msg">Что хотите автоматизировать?</label>
+        <textarea name="message" data-i18n-ph="c.ph" placeholder="Коротко о задаче или процессах…"></textarea>
+        <div class="err" id="leadErr"></div>
+        <button type="submit" class="btn primary" id="leadBtn" data-i18n="c.btn">Отправить заявку</button>
+      </div>
+    </form>
+  </div>
+</div></section>
+
+<footer><div class="wrap foot">
+  <a class="brand" href="/"><span class="wm">Maru</span></a>
+  <span data-i18n="foot.tag">· ИИ-ассистент для бизнеса</span>
+  <span class="right">
+    <a href="#contact" data-i18n="foot.cta">Запросить демо</a>
+    <a href="/materials/" data-i18n="foot.mat">Материалы для партнёров</a>
+  </span>
+</div></footer>
+
+<script>
+const EN = {
+  "__title":"Maru — the AI assistant that runs your business operations",
+  "__desc":"Maru connects your accounting system, bank, documents and shop-floor data into one layer and turns routine into plain-language commands, automatic reports and forecasts.",
+  "nav.caps":"Capabilities","nav.platform":"Platform","nav.how":"How it works","nav.results":"Results","nav.case":"Case","nav.arch":"Architecture","nav.ent":"Deployment","nav.cta":"Request a demo",
+  "case.eyebrow":"Case study","case.h2":"What it delivered in practice",
+  "case.sub":"Results of a rollout at an operating manufacturing & trading group: several legal entities, export, a vehicle fleet, shift-based production. Figures anonymised.",
+  "case.ctx":"Before: fragmented systems — ERP, bank, email, mobile data from the shop floor and logistics — plus manual paperwork. After: everything in one layer, routine turned into plain-language commands and automatic reports.",
+  "case.m1v":"3–4 h","case.m1":"of manual work a day taken off the team",
+  "case.m2v":"~60","case.m2":"processes running 24/7",
+  "case.m3v":"60+","case.m3":"document types automatically",
+  "case.m4v":"~85%+","case.m4":"accuracy of source-document recognition",
+  "case.m5v":"1 min","case.m5":"for a document set instead of ~1 hour",
+  "case.m6v":"<1 s","case.m6":"a management report instead of a day in Excel",
+  "case.m7v":"4+","case.m7":"systems merged into one layer",
+  "case.m8v":"0","case.m8":"data loss: backups and self-monitoring",
+  "case.quote":"The team does the job instead of shuffling data. Management sees the numbers every day, not at month-end.",
+  "arch.eyebrow":"Architecture","arch.h2":"Where your data lives",
+  "arch.sub":"For technical leaders: how the perimeter is arranged, what is processed where, and how it is secured.",
+  "arch.cl1":"Telegram","arch.cl2":"App","arch.cl3":"Voice","arch.chan":"secure channel",
+  "arch.peri":"Your perimeter — data stays with you","arch.agents":"AI agents · roles & permissions",
+  "arch.tool1":"Document generator","arch.tool2":"Recognition (OCR)","arch.tool3":"Reports & analytics",
+  "arch.sys1":"1C (ERP)","arch.sys2":"Analytics database","arch.sys3":"Bank","arch.sys4":"Email & calendar",
+  "arch.bg":"~60 background processes · 24/7",
+  "arch.b1":"Operation confirmation","arch.b2":"Access control","arch.b3":"Full logging","arch.b4":"Daily backups",
+  "arch.note":"Maru is deployed on your machine or within your perimeter. Only a secure channel goes outward; credentials and documents never leave the perimeter.",
+  "hero.eyebrow":"AI assistant for business","hero.h1":"Routine to the machine.<br>Decisions to people.",
+  "hero.lead":"Maru connects your accounting system, bank, documents and shop-floor data into one layer — and turns daily routine into plain-language commands, automatic reports and forecasts.",
+  "hero.cta1":"Request a demo →","hero.cta2":"How it works",
+  "dev.status":"● online","dev.me1":"🎙 “Create an invoice for the client, 200 units”","dev.bot1":"Done 👌","dev.doc":"Invoice #438.pdf — stamped",
+  "dev.me2":"What was yesterday’s revenue?","dev.bot2":"Yesterday’s revenue: <b>184,500</b>. Margin 22%.","dev.mini":"from the accounting system · just now",
+  "trust.1":"runs unattended","trust.2":"processes automated","trust.3":"document types","trust.4":"we create documents, not just read",
+  "prob.eyebrow":"Sound familiar?","prob.h2":"Business drowning in routine",
+  "prob.sub":"The more operations you run, the more manual work, double entry and lost hours. The team is busy moving data between programs instead of doing the job.",
+  "prob.1":"The same documents are filled in by hand — hours every day.",
+  "prob.2":"Data is re-typed two or three times across the ERP, bank, email and Excel.",
+  "prob.3":"Management reports “take a while to compile” — numbers arrive late.",
+  "prob.4":"Decisions are made on gut feel: there is no single picture or forecast.",
+  "caps.eyebrow":"Capabilities today","caps.h2":"One assistant instead of ten programs",
+  "caps.sub":"An employee types or dictates a task in the messenger — Maru works with every system and returns the result.",
+  "cap.1t":"Messenger interface","cap.1d":"Text, voice, photos, documents. Nothing to learn.",
+  "cap.2t":"Assistants with permissions","cap.2d":"Roles and access: some view, some edit.",
+  "cap.3t":"ERP (1C) integration","cap.3d":"Reads master data and creates documents in the ledger.",
+  "cap.4t":"Documents from templates","cap.4d":"Contracts, invoices, acts, waybills — in seconds, stamped.",
+  "cap.5t":"Source docs by photo","cap.5d":"Snap an invoice → confirm → recorded in the ledger.",
+  "cap.6t":"Data from the field","cap.6d":"On-site app → cloud → shared database.",
+  "cap.7t":"AI-driven reports","cap.7d":"Payroll, P&L, stock — delivered to your messenger.",
+  "cap.8t":"External integrations","cap.8d":"Bank, FX rates, email, calendar — automatically.",
+  "plat.eyebrow":"What’s next","plat.h2":"From assistant to an operations platform",
+  "plat.sub":"Everything you have — accounting, bank, documents, shop-floor and logistics data — already converges in one layer, with AI agents working on top. On that foundation the next level opens up.",
+  "plat.1t":"Forecasting & planning","plat.1d":"Demand and revenue forecasts, cash-gaps spotted early, production and procurement planning by reorder point.",
+  "plat.2t":"Real-time production","plat.2d":"Live output dashboards, yield and scrap per machine and shift, bottlenecks, downtime, efficiency (OEE).",
+  "plat.3t":"Predictive maintenance","plat.3d":"Service forecasts, abnormal fuel use and leaks, total cost of ownership per unit.",
+  "plat.4t":"End-to-end traceability","plat.4d":"From raw batch to customer shipment via QR; certificates tied to a batch; claim analysis.",
+  "plat.5t":"Conversational analytics","plat.5d":"“Ask your business”: margin by customer, shift comparisons, trends — in words and charts.",
+  "plat.6t":"Document intelligence","plat.6d":"Semantic search across contracts and correspondence, obligation & deadline extraction, PO–receipt–invoice matching.",
+  "plat.7t":"Anomaly & fraud detection","plat.7d":"Duplicate payments, unusual transactions, ghost employees in payroll, fuel leakage.",
+  "plat.8t":"Approval orchestration","plat.8d":"Approval routes (payment above limit → to the director), deadlines, escalations — in the messenger.",
+  "badge.next":"on the roadmap",
+  "plat.note":"<b>This is not years of building from scratch.</b> The data, integrations and AI agents are already in place and running 24/7 — we add an analytics layer on top of a working foundation.",
+  "how.eyebrow":"How it works","how.h2":"Simple on the outside. Serious on the inside.",
+  "how.sub":"An employee talks to Maru like to a person. Under the hood — a link to your systems and dozens of background processes.",
+  "how.1t":"A request in plain language","how.1d":"Text, voice, a photo of an invoice or a document — right in the messenger.",
+  "how.2t":"The AI agent understands","how.2d":"It knows its role and permissions and reaches for the right tools and data.",
+  "how.3t":"Working with systems","how.3d":"ERP · database · document generator · bank · email · recognition.",
+  "how.4t":"The result","how.4d":"A ready document, a ledger entry, a report or an answer — in text or voice.",
+  "how.par":"— in parallel, 24/7, with no human —",
+  "how.5t":"~60 background processes","how.5d":"Sync, data capture, document classification, monitoring, report delivery, backups.",
+  "demo.eyebrow":"In action","demo.h2":"Three minutes — three results",
+  "demo.1tag":"Voice → document","demo.1t":"Invoice in a minute","demo.1d":"“Create an invoice for the client, 200 units” — and a ready stamped PDF arrives.","demo.1w":"Voice → finished document",
+  "demo.2tag":"Photo → ledger","demo.2t":"Waybill into the system","demo.2d":"Photo of a waybill → recognition → confirmation → recorded in the accounting system.","demo.2w":"Paper became a record",
+  "demo.3tag":"Question → number","demo.3t":"Business at your fingertips","demo.3d":"“What was yesterday’s revenue?” — an instant answer from your data.","demo.3w":"Asked like a person",
+  "res.eyebrow":"Results","res.h2":"What it replaces",
+  "res.th1":"Process","res.th2":"Before","res.th3":"Now",
+  "res.r1":"A document set","res.r1a":"~1 hour by hand","res.r1b":"~1 minute",
+  "res.r2":"Recording an incoming waybill","res.r2a":"~20 min / document","res.r2b":"photo + confirm",
+  "res.r3":"Payroll calculation","res.r3a":"hours of math","res.r3b":"automatic",
+  "res.r4":"Management report / P&L","res.r4a":"up to a day in Excel","res.r4b":"seconds",
+  "res.r5":"Bank reconciliation, balances","res.r5a":"manual export","res.r5b":"automatic",
+  "res.big":"of manual work a day taken off the team — plus fewer errors and full transparency",
+  "ent.eyebrow":"For enterprise","ent.h2":"Control, security, reliability",
+  "ent.sub":"Maru already runs in an operating company 24/7 — this is production use, not a demo for show.",
+  "ent.1t":"Operation confirmation","ent.1d":"Before any ledger entry — a preview and human confirmation.",
+  "ent.2t":"Access control","ent.2d":"Roles and permissions per employee. Full action logging.",
+  "ent.3t":"Your data stays with you","ent.3d":"Processing on your machine/perimeter. Hosting model to your requirements.",
+  "ent.4t":"Fault tolerance","ent.4d":"Auto-start, service auto-restart, daily backups.",
+  "ent.5t":"Self-monitoring","ent.5d":"Hourly health checks and alerts on failures.",
+  "ent.6t":"Tailored to your ERP","ent.6d":"Adapting to your configuration and documents is part of the rollout.",
+  "model.a.pill":"Available now","model.a.t":"Turnkey automation","model.a.d":"We analyse your processes and port ready, battle-tested blocks onto your accounting system and documents. Rollout + support, starting with 1–2 processes.",
+  "model.b.pill":"Roadmap","model.b.t":"Maru in the cloud","model.b.d":"An assistant in the cloud, a secure connector to your ERP, subscription billing. A scalable platform — already in the works.",
+  "c.h2":"Let’s show Maru on your processes","c.lead":"Leave a request — we’ll run a demo on your typical documents, pick 1–2 processes for a quick start and estimate your savings.",
+  "c.note":"Your request reaches us instantly. We’ll reply within a business day.",
+  "c.ok":"Thank you! Request received — we’ll be in touch shortly.",
+  "c.name":"Your name *","c.contact":"Phone, e-mail or Telegram *","c.company":"Company","c.msg":"What would you like to automate?","c.ph":"Briefly about the task or processes…","c.btn":"Send request",
+  "foot.tag":"· AI assistant for business","foot.cta":"Request a demo","foot.mat":"Materials for partners"
+};
+const RU = {};
+document.querySelectorAll('[data-i18n]').forEach(el=>RU[el.dataset.i18n]=el.innerHTML);
+document.querySelectorAll('[data-i18n-ph]').forEach(el=>RU[el.dataset.i18nPh+'#ph']=el.getAttribute('placeholder'));
+const RU_TITLE=document.title, RU_DESC=document.querySelector('meta[name=description]').content;
+function apply(l){
+  const en = l==='en';
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k=el.dataset.i18n; const v=en?EN[k]:RU[k]; if(v!=null) el.innerHTML=v;
+  });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{
+    const k=el.dataset.i18nPh; const v=en?EN['c.ph']:RU[k+'#ph']; if(v!=null) el.setAttribute('placeholder',v);
+  });
+  document.documentElement.lang=l;
+  document.title = en?EN['__title']:RU_TITLE;
+  document.querySelector('meta[name=description]').content = en?EN['__desc']:RU_DESC;
+  document.getElementById('langBtn').textContent = en?'RU':'EN';
+  try{localStorage.setItem('lang',l)}catch(e){}
+}
+document.getElementById('langBtn').addEventListener('click',()=>{
+  apply(document.documentElement.lang==='en'?'ru':'en');
+});
+let _saved=null; try{_saved=localStorage.getItem('lang')}catch(e){}
+const _qp=new URLSearchParams(location.search).get('lang');
+apply((_qp==='en'||_qp==='ru')?_qp : (_saved==='en'||_saved==='ru'?_saved:'ru'));
+
+const form=document.getElementById('leadForm');
+form.addEventListener('submit',async e=>{
+  e.preventDefault();
+  const en=document.documentElement.lang==='en';
+  const btn=document.getElementById('leadBtn'), err=document.getElementById('leadErr');
+  err.style.display='none'; btn.disabled=true; btn.textContent=en?'Sending…':'Отправляем…';
+  const data=Object.fromEntries(new FormData(form).entries());
+  try{
+    const r=await fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+    const j=await r.json();
+    if(j.ok){ document.getElementById('leadFields').style.display='none'; document.getElementById('leadOk').style.display='block'; }
+    else throw new Error(j.error||(en?'Could not send':'Не удалось отправить'));
+  }catch(ex){ err.textContent=ex.message||(en?'Send error. Try again.':'Ошибка отправки. Попробуйте ещё раз.'); err.style.display='block'; btn.disabled=false; btn.textContent=en?'Send request':'Отправить заявку'; }
+});
+</script>
+</body>
+</html>

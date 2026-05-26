@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Автоматизация бизнеса — кратко</title>
+<style>
+  :root{--ink:#10203a;--mut:#5a6b86;--acc:#1d6fe0;--acc2:#0f9d73;--line:#dde5f0;--bg:#f5f8fd;--card:#fff}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.45}
+  .page{max-width:1000px;margin:0 auto;padding:36px 44px}
+  header{border-bottom:3px solid var(--acc);padding-bottom:18px;margin-bottom:22px}
+  .kick{color:var(--acc);font-weight:800;letter-spacing:.12em;text-transform:uppercase;font-size:.8rem}
+  h1{font-size:2.1rem;font-weight:800;letter-spacing:-.02em;margin:.3rem 0 .5rem}
+  .tagline{font-size:1.15rem;color:var(--mut);max-width:75ch}
+  .tagline b{color:var(--ink)}
+  h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--acc);margin:24px 0 12px}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  .cap{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+  .cap h3{font-size:.98rem;margin-bottom:3px}
+  .cap p{font-size:.82rem;color:var(--mut)}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center}
+  .stat .v{font-size:1.9rem;font-weight:800;color:var(--acc2)}
+  .stat .l{font-size:.82rem;color:var(--mut);margin-top:2px}
+  table{width:100%;border-collapse:collapse;font-size:.92rem;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  th,td{text-align:left;padding:9px 14px;border-bottom:1px solid var(--line)}
+  th{background:#eef3fb;color:var(--acc);font-size:.78rem;text-transform:uppercase;letter-spacing:.06em}
+  tr:last-child td{border-bottom:none}
+  td.now{color:var(--acc2);font-weight:600}
+  .models{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .model{border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--card)}
+  .model.a{border-color:var(--acc2);border-width:2px}
+  .model .t{display:inline-block;font-size:.72rem;font-weight:800;padding:2px 8px;border-radius:99px;margin-bottom:6px}
+  .model.a .t{background:#e3f7ef;color:var(--acc2)} .model.b .t{background:#e7f0fd;color:var(--acc)}
+  .model h3{font-size:1.05rem;margin-bottom:3px} .model p{font-size:.85rem;color:var(--mut)}
+  footer{margin-top:26px;padding-top:16px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;font-size:.9rem;color:var(--mut)}
+  .cta{background:var(--acc);color:#fff;font-weight:700;padding:9px 18px;border-radius:99px}
+  @media print{body{background:#fff}.page{padding:0}}
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="kick">Автоматизация бизнеса под ключ</div>
+    <h1>Рутина — машине. Решения — людям.</h1>
+    <p class="tagline">Единый ИИ-ассистент в мессенджере + слой автоматизации, который связывает <b>учётную систему (1С), банк, почту, документы и данные с рабочих мест</b>. Сотрудники общаются с системой голосом и текстом — она делает работу сама.</p>
+  </header>
+
+  <h2>Что умеет система</h2>
+  <div class="grid4">
+    <div class="cap"><h3>Мессенджер-интерфейс</h3><p>Текст, голос, фото, документы</p></div>
+    <div class="cap"><h3>Ассистенты с правами</h3><p>Роли, доступы, своя память</p></div>
+    <div class="cap"><h3>Интеграция с 1С</h3><p>Чтение и создание документов</p></div>
+    <div class="cap"><h3>Документы из шаблонов</h3><p>60+ типов за секунды, с печатью</p></div>
+    <div class="cap"><h3>Первичка по фото</h3><p>Снял накладную → запись в учёте</p></div>
+    <div class="cap"><h3>Данные с мест</h3><p>Приложение → облако → база</p></div>
+    <div class="cap"><h3>Автоотчёты с ИИ</h3><p>Оплата труда, P&L, остатки</p></div>
+    <div class="cap"><h3>Внешние интеграции</h3><p>Банк, курсы, почта, календарь</p></div>
+  </div>
+
+  <h2>Что это заменяет</h2>
+  <table>
+    <tr><th>Процесс</th><th>Было</th><th>Стало</th></tr>
+    <tr><td>Комплект документов</td><td>~1 час вручную</td><td class="now">~1 минута</td></tr>
+    <tr><td>Ввод входящей накладной</td><td>~20 мин / документ</td><td class="now">фото + подтверждение</td></tr>
+    <tr><td>Расчёт оплаты труда</td><td>часы расчётов</td><td class="now">автоматически</td></tr>
+    <tr><td>Управленческий отчёт / P&L</td><td>до дня в Excel</td><td class="now">секунды</td></tr>
+    <tr><td>Сверка банка, контроль остатков</td><td>ручная выгрузка ежедневно</td><td class="now">автоматически</td></tr>
+  </table>
+
+  <h2 style="margin-top:20px">Почему нам можно верить</h2>
+  <div class="grid4">
+    <div class="stat"><div class="v">~60</div><div class="l">процессов 24/7</div></div>
+    <div class="stat"><div class="v">60+</div><div class="l">типов документов</div></div>
+    <div class="stat"><div class="v">3–4 ч</div><div class="l">ручной работы в день снимаем</div></div>
+    <div class="stat"><div class="v">1С</div><div class="l">создаём документы, не только читаем</div></div>
+  </div>
+  <p style="font-size:.92rem;color:var(--mut);margin-top:10px">Это <b style="color:var(--ink)">уже работает в действующей компании каждый день</b> — а не слайды о планах. Перед любой записью в учёт — подтверждение человеком, разграничение прав, полное логирование, ежедневные бэкапы.</p>
+
+  <h2>Форматы работы</h2>
+  <div class="models">
+    <div class="model a"><span class="t">ДОСТУПНО СЕЙЧАС</span><h3>Автоматизация под ключ</h3><p>Переносим готовые блоки под вашу 1С и документы. Внедрение + поддержка. Старт с 1–2 процессов.</p></div>
+    <div class="model b"><span class="t">РАЗВИТИЕ</span><h3>Подписка на ассистента</h3><p>Ваш ассистент в облаке, коннектор к вашей 1С, оплата помесячно. Платформа уже строится.</p></div>
+  </div>
+
+  <footer>
+    <div>Покажем демо на ваших типовых документах · посчитаем вашу экономию · запустим пилот</div>
+    <div class="cta">Обсудим ваши процессы?</div>
+  </footer>
+</div>
+</body>
+</html>
