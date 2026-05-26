@@ -456,6 +456,33 @@
   <p class="ex-cap" data-i18n="ex.cap">Сценарии воссозданы на вымышленных данных. Maru работает с вашими системами в вашем контуре.</p>
 </div></section>
 
+<!-- MONITORS -->
+<section class="block" id="monitors"><div class="wrap">
+  <div class="sec-head">
+    <span class="eyebrow" data-i18n="mon.eyebrow">Боты-наблюдатели</span>
+    <h2 data-i18n="mon.h2">Документы попадают в учёт — без ручного ввода</h2>
+    <p data-i18n="mon.sub">Maru круглосуточно следит за вашими каналами, распознаёт входящие документы и доводит данные до учётной системы. Сотрудник только проверяет — не набивает.</p>
+  </div>
+  <div class="flow">
+    <div class="step"><div class="n">1</div><div><h3 data-i18n="mon.s1t">Наблюдают каналы 24/7</h3><p data-i18n="mon.s1d">Рабочие чаты, электронная почта, сканы и фото документов — всё под присмотром, без выходных.</p></div></div>
+    <div class="step"><div class="n">2</div><div><h3 data-i18n="mon.s2t">Распознают</h3><p data-i18n="mon.s2d">QR и штрихкоды, текст (OCR), ИИ-зрение определяет тип документа и вытаскивает поля — даже рукописные пометки.</p></div></div>
+    <div class="step"><div class="n">3</div><div><h3 data-i18n="mon.s3t">Сопоставляют со справочниками 1С</h3><p data-i18n="mon.s3d">Контрагент и номенклатура подбираются автоматически — по УНП и названию, устойчиво к опечаткам распознавания. Не уверена — предлагает варианты, а не гадает.</p></div></div>
+    <div class="step"><div class="n">4</div><div><h3 data-i18n="mon.s4t">Запись в учёт — в один тап</h3><p data-i18n="mon.s4d">Вы видите готовую карточку и подтверждаете — документ создаётся в 1С с переносом договора, счетов и реквизитов. Без вашего «ок» ничего не пишется.</p></div></div>
+  </div>
+  <h3 style="text-align:center;margin:42px 0 18px;color:#fff;font-size:1.25rem" data-i18n="mon.gridh">Что Maru распознаёт</h3>
+  <div class="caps">
+    <div class="cap"><div class="ic">📄</div><h3 data-i18n="mon.g1t">Накладные и ТТН</h3><p data-i18n="mon.g1d">Поля и позиции, гаражные номера.</p></div>
+    <div class="cap"><div class="ic">🧾</div><h3 data-i18n="mon.g2t">Чеки и QR</h3><p data-i18n="mon.g2d">Спариваются по QR, сами складываются в рейсы.</p></div>
+    <div class="cap"><div class="ic">🛣</div><h3 data-i18n="mon.g3t">Путевые листы</h3><p data-i18n="mon.g3d">Маршрут, пробег, расход топлива.</p></div>
+    <div class="cap"><div class="ic">🚗</div><h3 data-i18n="mon.g4t">Паспорта ТС</h3><p data-i18n="mon.g4d">Марка, VIN, госномер.</p></div>
+    <div class="cap"><div class="ic">🛡</div><h3 data-i18n="mon.g5t">Страховки</h3><p data-i18n="mon.g5d">Полисы по машинам.</p></div>
+    <div class="cap"><div class="ic">🧮</div><h3 data-i18n="mon.g6t">Счета и акты</h3><p data-i18n="mon.g6d">Входящая первичка.</p></div>
+    <div class="cap"><div class="ic">🏷</div><h3 data-i18n="mon.g7t">Заводские шильдики</h3><p data-i18n="mon.g7d">Модель и серийный номер узла.</p></div>
+    <div class="cap"><div class="ic">📨</div><h3 data-i18n="mon.g8t">Письма и вложения</h3><p data-i18n="mon.g8d">Почта под мониторингом, файлы сохраняются.</p></div>
+  </div>
+  <div class="plat-note" data-i18n="mon.note"><b>Наблюдение, распознавание и раскладка по папкам — автоматически, 24/7.</b> Запись в 1С — после вашего подтверждения: вы проверяете и нажимаете «ок», а не вводите руками. Так уходит рутина, но полный контроль над учётом остаётся за вами.</div>
+</div></section>
+
 <!-- RESULTS -->
 <section class="block" id="results"><div class="wrap">
   <div class="sec-head">
@@ -668,6 +695,22 @@ const EN = {
   "ex.3task":"Analytics","ex.3q":"Analyse hires and dismissals for the year from the ERP","ex.3a":"Headcount is shrinking over the year: ~12 left, 4 hired. Turnover peaked in April. Want a breakdown by department?",
   "ex.4task":"Search","ex.4q":"Find and send the latest waybill from the supplier","ex.4a":"Latest waybill #0642331 dated May 24. Sending.","ex.4doc":"Waybill_0642331.pdf",
   "ex.cap":"Scenarios recreated on fictional data. Maru works with your systems inside your perimeter.",
+  "mon.eyebrow":"Watcher bots","mon.h2":"Documents reach the ledger — with no manual entry",
+  "mon.sub":"Maru watches your channels around the clock, recognises incoming documents and brings the data into your accounting system. An employee only checks — never types it in.",
+  "mon.s1t":"They watch channels 24/7","mon.s1d":"Work chats, email, scans and photos of documents — all under watch, no days off.",
+  "mon.s2t":"They recognise","mon.s2d":"QR and barcodes, text (OCR), AI vision detects the document type and pulls the fields — even handwritten notes.",
+  "mon.s3t":"They match against the ERP","mon.s3d":"Counterparty and item are matched automatically — by tax ID and name, resilient to recognition typos. Not sure? It offers options instead of guessing.",
+  "mon.s4t":"Recorded in one tap","mon.s4d":"You see a ready card and confirm — the document is created in 1C with the contract, accounts and details carried over. Nothing is written without your “ok”.",
+  "mon.gridh":"What Maru recognises",
+  "mon.g1t":"Waybills & delivery notes","mon.g1d":"Fields and line items, garage numbers.",
+  "mon.g2t":"Receipts & QR","mon.g2d":"Paired by QR, auto-grouped into trips.",
+  "mon.g3t":"Trip sheets","mon.g3d":"Route, mileage, fuel.",
+  "mon.g4t":"Vehicle passports","mon.g4d":"Make, VIN, plate.",
+  "mon.g5t":"Insurance policies","mon.g5d":"Policies per vehicle.",
+  "mon.g6t":"Invoices & acts","mon.g6d":"Incoming source documents.",
+  "mon.g7t":"Equipment nameplates","mon.g7d":"Model and unit serial number.",
+  "mon.g8t":"Emails & attachments","mon.g8d":"Mail monitored, files saved.",
+  "mon.note":"<b>Watching, recognition and filing — automatic, 24/7.</b> Writing into the ERP happens after your confirmation: you check and tap “ok” instead of typing it in. The routine goes away, but full control over the ledger stays with you.",
   "faq.eyebrow":"Reliability & security","faq.h2":"A human is always in charge","faq.sub":"Common questions about control, verification and data protection.",
   "faq.q1":"How reliable is Maru — does it make data up?",
   "faq.a1":"Maru does not invent figures. For every request it queries your real systems — ERP (1C), bank, database — and answers with what is actually there. Revenue, balances, details and documents come from the source, not from the model’s “imagination”. Answers are based on facts, not guesses.",
