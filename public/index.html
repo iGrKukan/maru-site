@@ -25,11 +25,11 @@
 
   nav{position:sticky;top:0;z-index:50;backdrop-filter:saturate(1.4) blur(14px);
     background:rgba(31,30,29,.72);border-bottom:1px solid var(--line)}
-  .nav{display:flex;align-items:center;gap:28px;height:64px}
+  .nav{display:flex;align-items:center;gap:20px;height:64px}
   .brand{display:flex;align-items:center;gap:11px;font-weight:700}
   .brand .wm{font-family:Georgia,serif;font-size:1.5rem;letter-spacing:.06em;color:var(--accent)}
-  .nav .links{display:flex;gap:24px;margin-left:auto}
-  .nav .links a{color:var(--soft);font-size:.95rem}
+  .nav .links{display:flex;gap:19px;margin-left:auto}
+  .nav .links a{color:var(--soft);font-size:.92rem;white-space:nowrap}
   .nav .links a:hover{color:var(--ink)}
   .btn{display:inline-flex;align-items:center;gap:8px;border-radius:13px;padding:11px 20px;font-weight:600;font-size:.95rem;cursor:pointer;border:1px solid transparent;transition:.18s;white-space:nowrap;font-family:inherit}
   .btn.primary{background:var(--accent);color:#fff}
@@ -226,11 +226,11 @@
   <a class="brand" href="/"><span class="wm">Maru</span></a>
   <div class="links">
     <a href="#caps" data-i18n="nav.caps">Возможности</a>
-    <a href="#platform" data-i18n="nav.platform">Платформа</a>
+    <a href="#monitors" data-i18n="nav.mon">Документы → 1С</a>
     <a href="#how" data-i18n="nav.how">Как работает</a>
     <a href="#results" data-i18n="nav.results">Результат</a>
     <a href="#case" data-i18n="nav.case">Кейс</a>
-    <a href="#architecture" data-i18n="nav.arch">Архитектура</a>
+    <a href="#faq" data-i18n="nav.faq">Надёжность</a>
     <a href="#enterprise" data-i18n="nav.ent">Внедрение</a>
   </div>
   <button class="btn ghost lang" id="langBtn">EN</button>
@@ -616,7 +616,7 @@
 const EN = {
   "__title":"Maru — the AI assistant that runs your business operations",
   "__desc":"Maru connects your accounting system, bank, documents and shop-floor data into one layer and turns routine into plain-language commands, automatic reports and forecasts.",
-  "nav.caps":"Capabilities","nav.platform":"Platform","nav.how":"How it works","nav.results":"Results","nav.case":"Case","nav.arch":"Architecture","nav.ent":"Deployment","nav.cta":"Request a demo",
+  "nav.caps":"Capabilities","nav.platform":"Platform","nav.mon":"Docs → 1C","nav.how":"How it works","nav.results":"Results","nav.case":"Case","nav.faq":"Reliability","nav.arch":"Architecture","nav.ent":"Deployment","nav.cta":"Request a demo",
   "case.eyebrow":"Case study","case.h2":"What it delivered in practice",
   "case.sub":"Results of a rollout at an operating manufacturing & trading group: several legal entities, export, a vehicle fleet, shift-based production. Figures anonymised.",
   "case.ctx":"Before: fragmented systems — ERP, bank, email, mobile data from the shop floor and logistics — plus manual paperwork. After: everything in one layer, routine turned into plain-language commands and automatic reports.",
