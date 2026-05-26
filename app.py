@@ -23,7 +23,7 @@ SESSION_TTL = 12 * 3600
 # антиспам заявок
 LEAD_MAX, LEAD_WINDOW = 5, 3600   # не более 5 заявок с IP за час
 LEAD_EMAIL = "sistemaov17@gmail.com"
-EMAIL_PY   = "/usr/bin/python3"
+EMAIL_PY   = os.path.expanduser("~/openclaw-server/venv/bin/python")
 EMAIL_TOOL = os.path.expanduser("~/openclaw-server/scripts/tools/send_email.py")
 
 with open(os.path.join(BASE, ".secret")) as f:
