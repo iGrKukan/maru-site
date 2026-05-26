@@ -22,9 +22,9 @@ SESSION_TTL = 12 * 3600
 
 # антиспам заявок
 LEAD_MAX, LEAD_WINDOW = 5, 3600   # не более 5 заявок с IP за час
-TG_PY  = os.path.expanduser("~/openclaw-server/venv/bin/python")
-TG_TOOL = os.path.expanduser("~/openclaw-server/scripts/tools/tg_send.py")
-LEAD_TO = "obiwan"
+LEAD_EMAIL = "sistemaov17@gmail.com"
+EMAIL_PY   = "/usr/bin/python3"
+EMAIL_TOOL = os.path.expanduser("~/openclaw-server/scripts/tools/send_email.py")
 
 with open(os.path.join(BASE, ".secret")) as f:
     SECRET = f.read().strip().encode()
@@ -166,13 +166,15 @@ class H(BaseHTTPRequestHandler):
         msg=(data.get("message") or "").strip()[:1500]
         if len(name)<2 or len(contact)<3:
             return self.send_json(400,{"ok":False,"error":"Укажите имя и контакт."})
-        text=("🟠 Заявка с сайта Maru\n\n"
+        subject = f"Заявка с сайта Maru — {name}"
+        text=("Новая заявка с сайта Maru\n\n"
               f"Имя: {name}\nКонтакт: {contact}\n"
               + (f"Компания: {company}\n" if company else "")
               + (f"\nСообщение:\n{msg}\n" if msg else "")
               + f"\n— IP {ip} · {time.strftime('%Y-%m-%d %H:%M')}")
         try:
-            subprocess.run([TG_PY,TG_TOOL,"--to",LEAD_TO,"--force","--message",text],
+            subprocess.run([EMAIL_PY,EMAIL_TOOL,"--to",LEAD_EMAIL,
+                            "--subject",subject,"--body",text],
                            timeout=30,capture_output=True)
         except Exception:
             pass  # заявку всё равно подтверждаем пользователю
