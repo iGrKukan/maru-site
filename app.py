@@ -432,9 +432,14 @@ def publish_draft(message):
     msg=("cabinet: "+(message or "обновление содержимого сайта"))[:200]
     rc,o,e=_git("commit","-m",msg,"--","public")
     if rc!=0: return False,f"commit: {e or o}"
+    # синхронизируемся с origin (его мог обогнать авто-деплой/правки app.py) — наш коммит на вершину
+    _git("fetch","origin","main",timeout=60)
+    rc,o,e=_git("rebase","origin/main")
+    if rc!=0:
+        _git("rebase","--abort"); _git("reset","--soft","HEAD~1")
+        return False,"Черновик разошёлся с сайтом (конфликт правок). Нажмите «Откатить черновик» и повторите задачу."
     rc,o,e=_git("push","origin","main",timeout=120)
     if rc!=0:
-        _git("reset","--soft","HEAD~1")            # откат коммита, чтобы не копить локальные
         return False,f"push: {e or o}"
     _audit(f"publish '{msg}' pushed")
     # мгновенно подтянуть на живой сайт
