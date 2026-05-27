@@ -1,5 +1,9 @@
 # секреты и локальное — НЕ публиковать
 .secret
+.secret-admin
+maru-edit.sb
 *.log
 __pycache__/
 .DS_Store
+.secret-apikey
+.secret-oauth-token
